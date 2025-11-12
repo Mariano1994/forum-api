@@ -1,10 +1,10 @@
 import { describe, expect, it } from "vitest";
-import type { Answer } from "../entities/answer";
+import type { Answer } from "../../enterprise/entities/answer";
 import type { AnswersRepository } from "../repositories/answers-repository";
 import { AnswerQuestionUseCase } from "./answer-question";
 
 const fakeAnswerRepository: AnswersRepository = {
-	create: async (answer: Answer) => {
+	create: async (_answer: Answer) => {
 		return;
 	},
 };

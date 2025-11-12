@@ -1,7 +1,8 @@
+import { randomUUID } from "node:crypto";
 import dayjs from "dayjs";
-import { Entity } from "../../core/entities/entitty";
-import type { UniqueEntityId } from "../../core/entities/unique-entity-id";
-import type { Optional } from "../../core/types/optional";
+import { Entity } from "@/core/entities/entitty";
+import type { UniqueEntityId } from "@/core/entities/unique-entity-id";
+import type { Optional } from "@/core/types/optional";
 import { Slug } from "./value-objects/slug";
 
 interface QuestionPros {
@@ -72,7 +73,7 @@ export class Question extends Entity<QuestionPros> {
 
 	static create(
 		props: Optional<QuestionPros, "createdAt" | "slug">,
-		id: UniqueEntityId,
+		id?: UniqueEntityId,
 	) {
 		const question = new Question(
 			{

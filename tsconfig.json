@@ -9,6 +9,10 @@
 		"target": "es2022",
 		"noEmit": true,
 		"allowImportingTsExtensions": true,
+		"baseUrl": "./",
+		"paths": {
+			"@/*": ["./src/*"]
+		},
 
 		"strict": true,
 		"esModuleInterop": true,
