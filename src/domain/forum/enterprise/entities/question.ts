@@ -1,11 +1,10 @@
-import { randomUUID } from "node:crypto";
 import dayjs from "dayjs";
 import { Entity } from "@/core/entities/entitty";
 import type { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import type { Optional } from "@/core/types/optional";
 import { Slug } from "./value-objects/slug";
 
-interface QuestionPros {
+export interface QuestionPros {
 	authorId: UniqueEntityId;
 	bestAnswerId?: UniqueEntityId;
 	title: string;
