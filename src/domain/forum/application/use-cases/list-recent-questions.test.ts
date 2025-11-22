@@ -22,16 +22,13 @@ describe("List recents question use casa", () => {
 		await inMemoryQuestionsRepository.create(
 			makeQuestion({ createdAt: new Date(2025, 0, 25) }),
 		);
-
 		await inMemoryQuestionsRepository.create(
 			makeQuestion({ createdAt: new Date(2025, 0, 22) }),
 		);
-
 		await inMemoryQuestionsRepository.create(
 			makeQuestion({ createdAt: new Date(2025, 0, 28) }),
 		);
 		await sut.handler({ page: 1 });
-
 		expect(inMemoryQuestionsRepository.items[0].createdAt).toEqual(
 			new Date(2025, 0, 28),
 		);
