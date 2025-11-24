@@ -1,3 +1,4 @@
+import { type Either, right } from "@/core/either";
 import type { Answer } from "../../enterprise/entities/answer";
 import type { AnswersRepository } from "../repositories/answers-repository";
 
@@ -6,10 +7,12 @@ interface ListQuestionAnswersUseCaseRequest {
 	page: number;
 }
 
-interface ListQuestionAnswersUseCaseResponse {
-	answers: Answer[];
-}
-
+type ListQuestionAnswersUseCaseResponse = Either<
+	null,
+	{
+		answers: Answer[];
+	}
+>;
 export class ListQuestionAnswersUseCase {
 	public answerRepository: AnswersRepository;
 
@@ -26,8 +29,8 @@ export class ListQuestionAnswersUseCase {
 			{ page },
 		);
 
-		return {
+		return right({
 			answers,
-		};
+		});
 	}
 }

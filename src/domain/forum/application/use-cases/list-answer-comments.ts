@@ -1,3 +1,4 @@
+import { type Either, right } from "@/core/either";
 import type { AnswerComment } from "../../enterprise/entities/answer-commet";
 import type { AnswerCommentsRepository } from "../repositories/answer-comments-repository";
 
@@ -6,9 +7,12 @@ interface ListAnswerAnswersUseCaseRequest {
 	page: number;
 }
 
-interface ListAnswerAnswersUseCaseResponse {
-	answerComments: AnswerComment[];
-}
+type ListAnswerAnswersUseCaseResponse = Either<
+	null,
+	{
+		answerComments: AnswerComment[];
+	}
+>;
 
 export class ListAnswerCommentsUseCase {
 	public answerCommentsRepository: AnswerCommentsRepository;
@@ -26,8 +30,8 @@ export class ListAnswerCommentsUseCase {
 				page,
 			});
 
-		return {
+		return right({
 			answerComments,
-		};
+		});
 	}
 }
