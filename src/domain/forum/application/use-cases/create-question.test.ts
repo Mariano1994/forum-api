@@ -12,12 +12,12 @@ describe("Create question use case", async () => {
 		sut = new CreateQuestionUseCase(InMemoryQuestionRepository);
 	});
 	it("should create a question", async () => {
-		const { question } = await sut.handler({
+		const result = await sut.handler({
 			authorId: "1",
 			title: "New Question",
 			content: "Tell me about javascript",
 		});
-
-		expect(question.content).toBeTruthy();
+		expect(result.isRight()).toBe(true);
+		expect(result.value?.question).toBeTruthy();
 	});
 });

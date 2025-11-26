@@ -8,7 +8,7 @@ import { NotAlowwedError } from "./errors/not-allowed-error";
 let inMemoryAnswerRepository: InMemoryAnswerCommentsRepositories;
 let sut: DeleteCommentAnswerUseCase;
 
-describe("Dele answer comment use case", () => {
+describe("Delete answer comment use case", () => {
 	beforeEach(() => {
 		inMemoryAnswerRepository = new InMemoryAnswerCommentsRepositories();
 		sut = new DeleteCommentAnswerUseCase(inMemoryAnswerRepository);

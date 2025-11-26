@@ -3,6 +3,7 @@ import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { makeQuestion } from "../../../../../test/factories/make-question";
 import { InMemoryQuestionsRepositories } from "../../../../../test/respositories/in-memory-questions-repositories";
 import { DeleteQuestionUseCase } from "./delete-question";
+import { NotAlowwedError } from "./errors/not-allowed-error";
 
 let inMemoryQuestionRepository: InMemoryQuestionsRepositories;
 let sut: DeleteQuestionUseCase;
@@ -36,12 +37,12 @@ describe("Delete question use case", () => {
 		);
 
 		await inMemoryQuestionRepository.create(newQuestion);
+		const result = await sut.handler({
+			authorId: "question-from-other-author",
+			questionId: "question-1",
+		});
 
-		expect(async () => {
-			await sut.handler({
-				authorId: "question-from-other-author",
-				questionId: "question-1",
-			});
-		}).rejects.toBeInstanceOf(Error);
+		expect(result.isLeft()).toBe(true);
+		expect(result.value).toBeInstanceOf(NotAlowwedError);
 	});
 });

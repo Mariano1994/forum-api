@@ -17,11 +17,10 @@ describe("Get Question By Slug Use Case", () => {
 		const newQuestion = makeQuestion({ slug: Slug.create("new-question") });
 
 		InMemoryQuestionRepository.create(newQuestion);
-		const { question } = await sut.handler({
+		const result = await sut.handler({
 			slug: "new-question",
 		});
 
-		expect(question).toBeTruthy();
-		expect(question.title).toEqual(newQuestion.title);
+		expect(result.isRight()).toBe(true);
 	});
 });

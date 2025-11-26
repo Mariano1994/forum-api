@@ -3,6 +3,7 @@ import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { makeQuestion } from "../../../../../test/factories/make-question";
 import { InMemoryQuestionsRepositories } from "../../../../../test/respositories/in-memory-questions-repositories";
 import { EditQuestionUseCase } from "./edit-question";
+import { NotAlowwedError } from "./errors/not-allowed-error";
 
 let inMemoryQuestionRepository: InMemoryQuestionsRepositories;
 let sut: EditQuestionUseCase;
@@ -41,14 +42,14 @@ describe("Edit question use case", () => {
 		);
 
 		await inMemoryQuestionRepository.create(newQuestion);
+		const result = await sut.handler({
+			authorId: "my-question-23",
+			questionId: newQuestion.id.toValue(),
+			title: "new title",
+			content: "Edited content",
+		});
 
-		expect(async () => {
-			await sut.handler({
-				authorId: "my-question-23",
-				questionId: newQuestion.id.toValue(),
-				title: "new title",
-				content: "Edited content",
-			});
-		}).rejects.toBeInstanceOf(Error);
+		expect(result.isLeft()).toBe(true);
+		expect(result.value).toBeInstanceOf(NotAlowwedError);
 	});
 });

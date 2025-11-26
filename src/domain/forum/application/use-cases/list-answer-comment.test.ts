@@ -32,12 +32,12 @@ describe("List questioin comments use case", () => {
 			}),
 		);
 
-		const { answerComments } = await sut.handler({
+		const result = await sut.handler({
 			answerId: "comment-1",
 			page: 1,
 		});
 
-		expect(answerComments).toHaveLength(3);
+		expect(result.value?.answerComments).toHaveLength(3);
 	});
 
 	it("should be able to list paginated comment answer", async () => {
@@ -47,11 +47,11 @@ describe("List questioin comments use case", () => {
 			);
 		}
 
-		const { answerComments } = await sut.handler({
+		const result = await sut.handler({
 			answerId: "comment-1",
 			page: 2,
 		});
 
-		expect(answerComments).toHaveLength(5);
+		expect(result.value?.answerComments).toHaveLength(5);
 	});
 });

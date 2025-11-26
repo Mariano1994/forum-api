@@ -5,6 +5,7 @@ import { makeQuestion } from "../../../../../test/factories/make-question";
 import { InMemoryAnswerRepositoreis } from "../../../../../test/respositories/in-memory-answer-repositories";
 import { InMemoryQuestionsRepositories } from "../../../../../test/respositories/in-memory-questions-repositories";
 import { ChooseQuestionBestAnswerUseCase } from "./choose-question-best-answer";
+import { NotAlowwedError } from "./errors/not-allowed-error";
 
 let inMemoryAnswersRepository: InMemoryAnswerRepositoreis;
 let inMemoryQuestionsRepository: InMemoryQuestionsRepositories;
@@ -52,12 +53,12 @@ describe("Choose question best answer use case", () => {
 		await inMemoryQuestionsRepository.create(newQuestion);
 		await inMemoryAnswersRepository.create(answer);
 
-		expect(
-			async () =>
-				await sut.handler({
-					answerId: answer.id.toString(),
-					authorId: "another-author",
-				}),
-		).rejects.toBeInstanceOf(Error);
+		const result = await sut.handler({
+			answerId: answer.id.toString(),
+			authorId: "another-author",
+		});
+
+		expect(result.isLeft()).toBe(true);
+		expect(result.value).toBeInstanceOf(NotAlowwedError);
 	});
 });

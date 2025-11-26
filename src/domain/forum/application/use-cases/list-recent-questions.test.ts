@@ -45,10 +45,10 @@ describe("List recents question use casa", () => {
 			await inMemoryQuestionsRepository.create(makeQuestion());
 		}
 
-		const { questions } = await sut.handler({
+		const result = await sut.handler({
 			page: 2,
 		});
 
-		expect(questions).toHaveLength(5);
+		expect(result.value?.questions).toHaveLength(5);
 	});
 });

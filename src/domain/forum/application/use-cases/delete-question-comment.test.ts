@@ -3,6 +3,7 @@ import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { makeQuestionComment } from "../../../../../test/factories/make-question-comment";
 import { InMemoryQuestionCommentsRepositories } from "../../../../../test/respositories/in-memory-question-comments-repository";
 import { DeleteCommentQuestionUseCase } from "./delete-comment-question";
+import { NotAlowwedError } from "./errors/not-allowed-error";
 
 let inMemoryQuestionRepository: InMemoryQuestionCommentsRepositories;
 let sut: DeleteCommentQuestionUseCase;
@@ -32,11 +33,12 @@ describe("Dele question comment use case", () => {
 		});
 		await inMemoryQuestionRepository.create(questionComment);
 
-		expect(async () => {
-			await sut.handler({
-				questionCommentId: questionComment.id.toString(),
-				authorId: "author-2",
-			});
-		}).rejects.toBeInstanceOf(Error);
+		const result = await sut.handler({
+			questionCommentId: questionComment.id.toString(),
+			authorId: "author-2",
+		});
+
+		expect(result.isLeft()).toBe(true);
+		expect(result.value).toBeInstanceOf(NotAlowwedError);
 	});
 });
