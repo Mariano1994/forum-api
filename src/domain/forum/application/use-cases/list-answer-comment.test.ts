@@ -2,7 +2,6 @@ import { beforeEach, describe, expect, it } from "vitest";
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { makeAnswerComment } from "../../../../../test/factories/make-answer-comment";
 import { InMemoryAnswerCommentsRepositories } from "../../../../../test/respositories/in-memory-answer-comments-repository";
-// import { makeComment } from "../../../../../test/factories/make-comment";
 
 import { ListAnswerCommentsUseCase } from "./list-answer-comments";
 
