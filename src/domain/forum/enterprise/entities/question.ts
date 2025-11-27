@@ -2,6 +2,8 @@ import dayjs from "dayjs";
 import { AggregateRoot } from "@/core/entities/aggragate-root";
 import type { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import type { Optional } from "@/core/types/optional";
+import { Attachment } from "./attachment";
+import type { QuestionAttachment } from "./question-attachment";
 import { Slug } from "./value-objects/slug";
 
 export interface QuestionPros {
@@ -10,6 +12,7 @@ export interface QuestionPros {
 	title: string;
 	content: string;
 	slug: Slug;
+	attachments: QuestionAttachment[];
 	createdAt: Date;
 	updatedAt?: Date;
 }
@@ -32,6 +35,9 @@ export class Question extends AggregateRoot<QuestionPros> {
 
 	get slug() {
 		return this.props.slug;
+	}
+	get attachments() {
+		return this.props.attachments;
 	}
 
 	get createdAt() {
@@ -71,13 +77,14 @@ export class Question extends AggregateRoot<QuestionPros> {
 	}
 
 	static create(
-		props: Optional<QuestionPros, "createdAt" | "slug">,
+		props: Optional<QuestionPros, "createdAt" | "slug" | "attachments">,
 		id?: UniqueEntityId,
 	) {
 		const question = new Question(
 			{
 				...props,
 				slug: props.slug ?? Slug.createFromText(props.title),
+				attachments: props.attachments ?? [],
 				createdAt: props.createdAt ?? new Date(),
 			},
 			id,
