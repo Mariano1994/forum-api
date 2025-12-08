@@ -2,7 +2,6 @@ import dayjs from "dayjs";
 import { AggregateRoot } from "@/core/entities/aggragate-root";
 import type { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import type { Optional } from "@/core/types/optional";
-import { Attachment } from "./attachment";
 import type { QuestionAttachment } from "./question-attachment";
 import { Slug } from "./value-objects/slug";
 
@@ -70,6 +69,10 @@ export class Question extends AggregateRoot<QuestionPros> {
 	set bestAnswerId(bestAnswerId: UniqueEntityId | undefined) {
 		this.props.bestAnswerId = bestAnswerId;
 		this.touch();
+	}
+
+	set attachments(attachments: QuestionAttachment[]) {
+		this.props.attachments = attachments;
 	}
 
 	private touch() {
